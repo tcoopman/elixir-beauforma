@@ -1,0 +1,2 @@
+defmodule Beauforma do
+end
