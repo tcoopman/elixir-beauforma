@@ -17,10 +17,7 @@ defmodule Beauforma.Projection.BookedGuests do
 
   def new, do: %State{}
 
-  def project(%State{} = state, events) do
-    events
-    |> Enum.reduce(state, &project_event/2)
-  end
+  def project(%State{} = state, events), do: Enum.reduce(events, state, &project_event/2)
 
   def nr_of_appointments_on_date(%State{map: map}, date) do
     map
