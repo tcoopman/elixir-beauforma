@@ -8,8 +8,8 @@ defmodule Beauforma.Projection.BookedGuestsTest do
     SubsidiaryCancelledAppointment
   }
   alias Beauforma.Projection.BookedGuests
-  doctest Beauforma
 
+  doctest Beauforma
 
   test "Projection" do
     events = [
