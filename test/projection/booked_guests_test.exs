@@ -50,6 +50,7 @@ defmodule Beauforma.Projection.BookedGuestsTest do
     state = BookedGuests.new
     |> BookedGuests.project(events)
 
-    assert BookedGuests.number_of_guests(state) == 2
+    assert BookedGuests.nr_of_appointments_on_date(state, "20160626") == 1
+    assert BookedGuests.nr_of_appointments_on_date(state, "20160625") == 1
   end
 end
