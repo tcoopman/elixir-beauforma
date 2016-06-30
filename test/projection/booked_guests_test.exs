@@ -52,5 +52,7 @@ defmodule Beauforma.Projection.BookedGuestsTest do
 
     assert BookedGuests.nr_of_appointments_on_date(state, "20160626") == 1
     assert BookedGuests.nr_of_appointments_on_date(state, "20160625") == 1
+    assert BookedGuests.has_appointment_on_date(state, "Olivier", "20160625") == true
+    assert BookedGuests.has_appointment_on_date(state, "Olivier", "20160626") == true
   end
 end

@@ -26,6 +26,14 @@ defmodule Beauforma.Projection.BookedGuests do
     |> Enum.count
   end
 
+  def has_appointment_on_date(%State{map: map}, person, date) do
+    map
+    |> Map.values
+    |> Stream.filter(&(&1.dateTime == date))
+    |> Stream.filter(&(&1.guestId == person))
+    |> Enum.any?
+  end
+
   defp project_event(%GuestBookedAppointment{appointmentId: aId, guestId: gId, appointmentDateAndTime: dateTime}, %State{} = state) do
     appointment = %Appointment{appointmentId: aId, guestId: gId, dateTime: dateTime}
     new_map = Map.put(state.map, aId, appointment)
