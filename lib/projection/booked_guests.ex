@@ -45,5 +45,12 @@ defmodule Beauforma.Projection.BookedGuests do
     end)
     %State{state | map: new_map}
   end
+  defp project_event(%GuestCancelledAppointment{appointmentId: aId}, %State{map: map} = state) do
+    %State{state | map: Map.delete(map, aId)}
+  end
+  defp project_event(%SubsidiaryCancelledAppointment{appointmentId: aId}, %State{map: map} = state) do
+    %State{state | map: Map.delete(map, aId)}
+  end
+  defp project_event(%GuestSwappedAppointmentFeelGoodPackage{}, %State{} = state), do: state
   defp project_event(_, %State{} = state), do: state
 end

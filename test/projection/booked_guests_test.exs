@@ -2,7 +2,10 @@ defmodule Beauforma.Projection.BookedGuestsTest do
   use ExUnit.Case
   alias Beauforma.Events.{
     GuestBookedAppointment,
-    GuestRescheduledAppointment
+    GuestRescheduledAppointment,
+    GuestSwappedAppointmentFeelGoodPackage,
+    GuestCancelledAppointment,
+    SubsidiaryCancelledAppointment
   }
   alias Beauforma.Projection.BookedGuests
   doctest Beauforma
@@ -45,14 +48,34 @@ defmodule Beauforma.Projection.BookedGuestsTest do
         feelGoodPackageId: 2,
         subsidiaryId: 1
       },
+      %GuestSwappedAppointmentFeelGoodPackage{
+        appointmentId: 2,
+        guestId: "Olivier",
+        feelGoodPackageId: 3,
+        subsidiaryId: 1
+      },
+      %GuestCancelledAppointment{
+        appointmentId: 3,
+        guestId: "Rose",
+        reason: "some reason",
+        subsidiaryId: 1
+      },
+      %SubsidiaryCancelledAppointment{
+        appointmentId: 2,
+        guestId: "Olivier",
+        reason: "other reason",
+        subsidiaryId: 1
+      }
     ]
 
     state = BookedGuests.new
     |> BookedGuests.project(events)
 
     assert BookedGuests.nr_of_appointments_on_date(state, "20160626") == 1
-    assert BookedGuests.nr_of_appointments_on_date(state, "20160625") == 1
-    assert BookedGuests.has_appointment_on_date(state, "Olivier", "20160625") == true
+    assert BookedGuests.nr_of_appointments_on_date(state, "20160625") == 0
+    assert BookedGuests.has_appointment_on_date(state, "Olivier", "20160625") == false
     assert BookedGuests.has_appointment_on_date(state, "Olivier", "20160626") == true
+    assert BookedGuests.has_appointment_on_date(state, "Rose", "20160501") == true
+    assert BookedGuests.nr_of_appointments_on_date(state, "20160501") == 1
   end
 end
