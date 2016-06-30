@@ -5,7 +5,6 @@ defmodule Beauforma.Projection.BookedGuestsTest do
     GuestRescheduledAppointment
   }
   alias Beauforma.Projection.BookedGuests
-  alias Beauforma.Projection.BookedGuests.{State, Appointment}
   doctest Beauforma
 
 
@@ -48,7 +47,8 @@ defmodule Beauforma.Projection.BookedGuestsTest do
       },
     ]
 
-    state = BookedGuests.project(%State{}, events)
+    state = BookedGuests.new
+    |> BookedGuests.project(events)
 
     assert BookedGuests.number_of_guests(state) == 2
   end

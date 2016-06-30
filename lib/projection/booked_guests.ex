@@ -15,6 +15,8 @@ defmodule Beauforma.Projection.BookedGuests do
     defstruct [:appointmentId, :guestId, :dateTime]
   end
 
+  def new, do: %State{}
+
   def project(%State{} = state, events) do
     events
     |> Enum.reduce(state, &project_event/2)
